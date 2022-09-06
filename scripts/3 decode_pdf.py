@@ -18,6 +18,7 @@ def decode(filename, outputfile):
 if __name__ == "__main__":
     import subprocess
     subprocess.call(['open', 'sample_pdfs/Skull Stamp.pdf'])
+    input("Press any key to continue")
 
     decode("sample_pdfs/Skull Stamp.pdf", "processed_pdfs/Decoded Skull.pdf")
     subprocess.call(['open', 'processed_pdfs/Decoded Skull.pdf'])
