@@ -62,9 +62,12 @@ class NewPdfWriter(PdfWriter):
         pages = cast(List[IndirectObject], pg_dict[PA.KIDS])
         for page in pages:
             page_ref = cast(Dict[str, Any], self.get_object(page))
+            print(page_ref)
+
             content = page_ref["/Contents"].get_object()
             if not isinstance(content, ContentStream):
                 content = ContentStream(content, page_ref)
+            
             new_operations = []
             for operands, operator in content.operations:
                 if operator in [b"Tj", b"'", b'"', b"TJ", b"Td", b"Tf", b"TD"]:
@@ -92,4 +95,9 @@ def remove_all_text(filename, outputfile):
 
 
 if __name__ == "__main__":
-    remove_all_text("sample_pdfs/Scratch my tummy.pdf", "processed_pdfs/Just Cat in a Box.pdf")
+    import subprocess
+
+    remove_all_text("sample_pdfs/Pirate Ipsum with Picture.pdf", "processed_pdfs/Just Picture.pdf")
+
+
+    subprocess.call(['open', 'processed_pdfs/Just Picture.pdf'])

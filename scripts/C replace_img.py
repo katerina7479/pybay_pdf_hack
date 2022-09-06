@@ -70,5 +70,11 @@ def replace_image(filename, filename_two, outputfile):
 
 
 if __name__ == "__main__":
+    import subprocess
+    subprocess.call(['open', 'sample_pdfs/Pirate with his Pet.pdf'])
+
+    input("Press any key to continue")
     replace_image("sample_pdfs/Pirate with his Pet.pdf", "sample_pdfs/Pirate Pet Pic 2.pdf", "processed_pdfs/Pirate with his Real Pet.pdf")
+    
+    subprocess.call(['open', 'processed_pdfs/Pirate with his Real Pet.pdf'])
 
