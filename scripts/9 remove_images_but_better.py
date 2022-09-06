@@ -18,6 +18,7 @@ class NewPdfWriter(PdfWriter):
             page_ref = cast(Dict[str, Any], self.get_object(page))
             
             resources = page_ref['/Resources']
+            print(resources)
             new_resources = DictionaryObject()
             for key, val in resources.items():
                 if key == '/XObject':
@@ -26,15 +27,7 @@ class NewPdfWriter(PdfWriter):
             page_ref.__setitem__(NameObject("/Resources"), new_resources)
 
 
-    def remove_stamp(self):
-        pg_dict = cast(DictionaryObject, self.get_object(self._pages))
-        pages = cast(List[IndirectObject], pg_dict[PA.KIDS])
-        for page in pages:
-            page_ref = cast(Dict[str, Any], self.get_object(page))
-            page_ref.__setitem__(NameObject("/Annots"), NullObject())
-
-
-def remove_stamp(filename, outputfile):
+def remove_images(filename, outputfile):
     reader = PdfReader(filename)
     writer = NewPdfWriter()
 
@@ -42,8 +35,7 @@ def remove_stamp(filename, outputfile):
         writer.add_page(page)
     
     # Remove the text
-    # writer.remove_image_objects()
-    writer.remove_stamp()
+    writer.remove_image_objects()
 
     # Save the new PDF to a file
     with open(outputfile, "wb") as fp:
@@ -51,4 +43,7 @@ def remove_stamp(filename, outputfile):
 
 
 if __name__ == "__main__":
-    remove_stamp("sample_pdfs/Stamped Pirate.pdf", "processed_pdfs/Clean Pirate.pdf")
+    import subprocess
+
+    remove_images("sample_pdfs/Pirate Ipsum with Picture.pdf", "processed_pdfs/Just Pirate Ipsum.pdf")
+    subprocess.call(['open', 'processed_pdfs/Just Pirate Ipsum.pdf'])

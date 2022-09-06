@@ -96,5 +96,13 @@ def change_color(filename, outputfile):
 
 
 if __name__ == "__main__":
-    remove_red_text_only("sample_pdfs/Win-win organic growth.pdf", "processed_pdfs/No Red Text Wins.pdf")
-    change_color("sample_pdfs/Win-win organic growth.pdf", "processed_pdfs/Red is Blue Wins.pdf")
+    import subprocess
+    subprocess.call(['open', 'sample_pdfs/Pirate Code.pdf'])
+
+    input("Press any key to continue")
+    remove_red_text_only("sample_pdfs/Pirate Code.pdf", "processed_pdfs/No Red Text Pirate Code.pdf")
+    subprocess.call(['open', 'processed_pdfs/No Red Text Pirate Code.pdf'])
+
+    input("Press any key to continue")
+    change_color("sample_pdfs/Pirate Code.pdf", "processed_pdfs/Red is Blue Pirate Code.pdf")    
+    subprocess.call(['open', 'processed_pdfs/Red is Blue Pirate Code.pdf'])

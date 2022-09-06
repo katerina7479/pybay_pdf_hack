@@ -26,6 +26,14 @@ class NewPdfWriter(PdfWriter):
             page_ref.__setitem__(NameObject("/Resources"), new_resources)
 
 
+    def remove_stamp(self):
+        pg_dict = cast(DictionaryObject, self.get_object(self._pages))
+        pages = cast(List[IndirectObject], pg_dict[PA.KIDS])
+        for page in pages:
+            page_ref = cast(Dict[str, Any], self.get_object(page))
+            page_ref.__setitem__(NameObject("/Annots"), NullObject())
+
+
 def remove_images(filename, outputfile):
     reader = PdfReader(filename)
     writer = NewPdfWriter()
@@ -33,7 +41,7 @@ def remove_images(filename, outputfile):
     for page in reader.pages:
         writer.add_page(page)
     
-    # Remove the text
+    # Remove the images
     writer.remove_image_objects()
 
     # Save the new PDF to a file
@@ -41,5 +49,30 @@ def remove_images(filename, outputfile):
         writer.write(fp)
 
 
+def remove_stamp(filename, outputfile):
+    reader = PdfReader(filename)
+    writer = NewPdfWriter()
+
+    for page in reader.pages:
+        writer.add_page(page)
+    
+    # Remove the stamp
+    writer.remove_stamp()
+
+    # Save the new PDF to a file
+    with open(outputfile, "wb") as fp:
+        writer.write(fp)
+
+
 if __name__ == "__main__":
-    remove_images("sample_pdfs/Scratch my tummy.pdf", "processed_pdfs/Just Cat Ipsum.pdf")
+    import subprocess
+    subprocess.call(['open', 'sample_pdfs/Stamped Pirate.pdf'])
+    input("Press any key to continue")
+
+    remove_images("sample_pdfs/Stamped Pirate.pdf", "processed_pdfs/Clean-ish Pirate.pdf")
+    subprocess.call(['open', 'processed_pdfs/Clean-ish Pirate.pdf'])
+    
+    input("Press any key to continue")
+    remove_stamp("sample_pdfs/Stamped Pirate.pdf", "processed_pdfs/Actually Clean Pirate.pdf")
+    subprocess.call(['open', 'processed_pdfs/Actually Clean Pirate.pdf'])
+

@@ -1,0 +1,74 @@
+%PDF-1.7
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/Group <</Type /Group /S /Transparency /CS /DeviceRGB>>
+/Contents 4 0 R>>
+endobj
+4 0 obj
+<</Length 81 >>
+stream
+0.000 0.000 0.000 rg
+BT /F1 12.00 Tf ET
+BT 20.00 757.60 Td  (Hello World) Tj  ET
+
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R ]
+/Count 1
+/MediaBox [0 0 612.00 792.00]
+>>
+endobj
+5 0 obj
+<</Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 5 0 R
+>>
+>>
+endobj
+6 0 obj
+<<
+/Producer (PDFLite, https://github.com/katerina7479)
+/Title (Hello)
+/CreationDate (D:20220814200107)
+>>
+endobj
+7 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /Fit]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000273 00000 n 
+0000000456 00000 n 
+0000000009 00000 n 
+0000000143 00000 n 
+0000000360 00000 n 
+0000000545 00000 n 
+0000000667 00000 n 
+trailer
+<<
+/Size 8
+/Root 7 0 R
+/Info 6 0 R
+/ID [ <ac8f858125c3e765f9ca11675037a0e2> <ac8f858125c3e765f9ca11675037a0e2>]
+>>
+startxref
+764
+%%EOF
