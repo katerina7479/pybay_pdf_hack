@@ -22,7 +22,7 @@ if __name__ == '__main__':
     import subprocess
     subprocess.call(['open', 'sample_pdfs/password_protected.pdf'])
 
-    input("Press any key to continue (password is my-secret-password )")
+    input("Press any key to continue password: ahoy")
 
-    remove_password('sample_pdfs/password_protected.pdf', 'processed_pdfs/removed_password.pdf', 'my-secret-password')
+    remove_password('sample_pdfs/password_protected.pdf', 'processed_pdfs/removed_password.pdf', 'ahoy')
     subprocess.call(['open', 'processed_pdfs/removed_password.pdf'])

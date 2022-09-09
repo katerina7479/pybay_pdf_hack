@@ -17,4 +17,4 @@ def remove_password(filename, outputfile, password):
 
 
 if __name__ == '__main__':
-    remove_password('sample_pdfs/password_protected.pdf', 'sample_pdfs/password_protected.pdf', 'my-secret-password')
+    remove_password('sample_pdfs/password_protected.pdf', 'sample_pdfs/password_protected.pdf', 'ahoy')
