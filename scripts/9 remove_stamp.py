@@ -96,7 +96,7 @@ if __name__ == "__main__":
     subprocess.call(['open', 'sample_pdfs/Stamped Pirate.pdf'])
     input("Press any key to continue")
 
-    remove_images("sample_pdfs/Stamped Pirate.pdf", "processed_pdfs/Clean-ish Pirate.pdf")
+    remove_text_and_images("sample_pdfs/Stamped Pirate.pdf", "processed_pdfs/Clean-ish Pirate.pdf")
     subprocess.call(['open', 'processed_pdfs/Clean-ish Pirate.pdf'])
     
     input("Press any key to continue")
