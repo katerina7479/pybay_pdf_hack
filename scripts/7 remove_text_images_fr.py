@@ -58,11 +58,10 @@ class NewPdfWriter(PdfWriter):
         """
         Remove text from this output.
         """
-        pg_dict = cast(DictionaryObject, self.get_object(self._pages))
-        pages = cast(List[IndirectObject], pg_dict[PA.KIDS])
+        pg_dict =  self.get_object(self._pages)
+        pages = pg_dict[PA.KIDS]
         for page in pages:
-            page_ref = cast(Dict[str, Any], self.get_object(page))
-            print(page_ref)
+            page_ref =  self.get_object(page)
 
             content = page_ref["/Contents"].get_object()
             if not isinstance(content, ContentStream):
@@ -77,6 +76,25 @@ class NewPdfWriter(PdfWriter):
 
             content.operations = new_operations
             page_ref.__setitem__(NameObject("/Contents"), content)
+
+
+    def remove_image_objects(self):
+        """
+        Remove images from this output.
+        """
+        pg_dict = self.get_object(self._pages)
+        pages = pg_dict[PA.KIDS]
+        for page in pages:
+            page_ref = self.get_object(page)
+            
+            resources = page_ref['/Resources']
+
+            new_resources = DictionaryObject()
+            for key, val in resources.items():
+                if key == '/XObject':
+                    val = DictionaryObject()
+                new_resources.__setitem__(NameObject(key), val)
+            page_ref.__setitem__(NameObject("/Resources"), new_resources)
 
 
 def remove_all_text(filename, outputfile):
@@ -94,10 +112,51 @@ def remove_all_text(filename, outputfile):
         writer.write(fp)
 
 
+def remove_all_images(filename, outputfile):
+    reader = PdfReader(filename)
+    writer = NewPdfWriter()
+
+    for page in reader.pages:
+        writer.add_page(page)
+    
+    # Remove the text
+    writer.remove_image_objects()
+
+    # Save the new PDF to a file
+    with open(outputfile, "wb") as fp:
+        writer.write(fp)
+
+
+def remove_both_images_and_text(filename, outputfile):
+    reader = PdfReader(filename)
+    writer = NewPdfWriter()
+
+    for page in reader.pages:
+        writer.add_page(page)
+    
+    # Remove the text
+    writer.remove_text()
+    writer.remove_image_objects()
+
+    # Save the new PDF to a file
+    with open(outputfile, "wb") as fp:
+        writer.write(fp)
+
+
 if __name__ == "__main__":
     import subprocess
-
+    subprocess.call(['open', 'sample_pdfs/Pirate Ipsum with Picture.pdf'])
+    
+    input("Press any key to continue")
     remove_all_text("sample_pdfs/Pirate Ipsum with Picture.pdf", "processed_pdfs/Just Picture.pdf")
-
-
     subprocess.call(['open', 'processed_pdfs/Just Picture.pdf'])
+
+    input("Press any key to continue")
+    remove_all_images("sample_pdfs/Pirate Ipsum with Picture.pdf", "processed_pdfs/Just Pirate Ipsum.pdf")
+    subprocess.call(['open', 'processed_pdfs/Just Pirate Ipsum.pdf'])
+
+    input("Press any key to continue")
+    remove_both_images_and_text("sample_pdfs/Pirate Ipsum with Picture.pdf", "processed_pdfs/Should Look Empty.pdf")
+    subprocess.call(['open', 'processed_pdfs/Should Look Empty.pdf'])
+
+    

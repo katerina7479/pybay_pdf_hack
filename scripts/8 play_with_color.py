@@ -12,10 +12,10 @@ class NewPdfWriter(PdfWriter):
         """
         Remove text from this output.
         """
-        pg_dict = cast(DictionaryObject, self.get_object(self._pages))
-        pages = cast(List[IndirectObject], pg_dict[PA.KIDS])
+        pg_dict = self.get_object(self._pages)
+        pages = pg_dict[PA.KIDS]
         for page in pages:
-            page_ref = cast(Dict[str, Any], self.get_object(page))
+            page_ref = self.get_object(page)
             content = page_ref["/Contents"].get_object()
             if not isinstance(content, ContentStream):
                 content = ContentStream(content, page_ref)
@@ -43,16 +43,15 @@ class NewPdfWriter(PdfWriter):
         """
         Change Red to blue Text
         """
-        pg_dict = cast(DictionaryObject, self.get_object(self._pages))
-        pages = cast(List[IndirectObject], pg_dict[PA.KIDS])
+        pg_dict =  self.get_object(self._pages)
+        pages =  pg_dict[PA.KIDS]
         for page in pages:
-            page_ref = cast(Dict[str, Any], self.get_object(page))
+            page_ref =  self.get_object(page)
             content = page_ref["/Contents"].get_object()
             if not isinstance(content, ContentStream):
                 content = ContentStream(content, page_ref)
 
             new_operations = []
-            is_red = False
             for operands, operator in content.operations:
                 if operator in [b'rg', b"RG"]:
                     r, g, b = operands
